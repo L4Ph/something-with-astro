@@ -17,7 +17,8 @@
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
-    "publish:jsr": "pnpm dlx jsr publish"
+    "publish:jsr": "pnpm dlx jsr publish",
+    "publish:npm": "pnpm publish"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^6.2.0",
