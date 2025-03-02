@@ -1,0 +1,24 @@
+{
+  "name": "@l4ph/s3-compatible-loader",
+  "version": "0.0.0",
+  "description": "A loader for S3-compatible storage services",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "dev": "rslib build --watch"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.758.0"
+  }
+}
