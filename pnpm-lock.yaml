@@ -26,6 +26,9 @@ importers:
 
   packages/s3-compatible-loader:
     dependencies:
+      '@astrojs/markdown-remark':
+        specifier: ^6.2.0
+        version: 6.2.0
       '@aws-sdk/client-s3':
         specifier: ^3.758.0
         version: 3.758.0

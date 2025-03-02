@@ -1,7 +1,9 @@
 import { S3Client, ListObjectsV2Command, GetObjectCommand, type S3ClientConfig } from "@aws-sdk/client-s3";
 import type { Loader } from 'astro/loaders';
+import type { AstroConfig } from 'astro';
 import type { Readable } from 'node:stream';
 import { streamToString } from './utils';
+import renderToString from './render';
 
 export type S3CompatibleLoaderOptions = {
   endpoint: string;
@@ -12,6 +14,8 @@ export type S3CompatibleLoaderOptions = {
   prefix?: string;
   forcePathStyle?: boolean;
   clientOptions?: Partial<S3ClientConfig>;
+  markdownParse?: boolean;
+  astroConfig?: AstroConfig;
 }
 
 export type ContentItem = {
@@ -20,6 +24,7 @@ export type ContentItem = {
   content: string;
   collection?: string;
   fileUrl?: string;
+  body?: string;
 }
 
 export function s3CompatibleLoader(options: S3CompatibleLoaderOptions): Loader {
@@ -78,6 +83,7 @@ export function s3CompatibleLoader(options: S3CompatibleLoaderOptions): Loader {
             id,
             slug,
             content,
+            body: content, // Add body property for renderToString compatibility
             fileUrl: `s3://${options.bucket}/${key}`,
             collection: key.split('/')[0] || 'default',
           };
@@ -88,12 +94,43 @@ export function s3CompatibleLoader(options: S3CompatibleLoaderOptions): Loader {
             data: contentItem,
           });
           
+          let html = data.content || "";
+          
+          // Use markdown parser if option is enabled
+          if (options.markdownParse === true) {
+            try {
+              if (!options.astroConfig) {
+                logger.warn("astroConfig is missing while markdownParse is true. Using default settings.");
+              }
+              
+              // Create a pseudo DataEntry for renderToString
+              const entry = {
+                id: data.id,
+                slug: data.slug,
+                body: data.content,
+                collection: data.collection || "",
+                data: data,
+              };
+              
+              const rendered = await renderToString(
+                options.astroConfig || { markdown: {} } as AstroConfig, 
+                entry
+              );
+              html = rendered.html;
+              logger.debug(`Rendered HTML for ${id}`);
+            } catch (error: unknown) {
+              if (error instanceof Error) {
+                logger.error(`Error rendering markdown for ${id}: ${error.message}`);
+              }
+            }
+          }
+          
           // Store the item
           store.set({
             id,
             data,
             rendered: {
-              html: data.content || "",
+              html,
             },
           });
         }

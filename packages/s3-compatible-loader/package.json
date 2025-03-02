@@ -20,6 +20,7 @@
     "publish:jsr": "pnpm dlx jsr publish"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^6.2.0",
     "@aws-sdk/client-s3": "^3.758.0"
   }
 }
