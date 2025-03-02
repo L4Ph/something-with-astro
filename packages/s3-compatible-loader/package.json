@@ -1,6 +1,6 @@
 {
   "name": "@l4ph/s3-compatible-loader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A loader for S3-compatible storage services",
   "type": "module",
   "exports": {
