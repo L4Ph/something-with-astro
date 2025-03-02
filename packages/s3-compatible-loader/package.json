@@ -16,7 +16,8 @@
   ],
   "scripts": {
     "build": "rslib build",
-    "dev": "rslib build --watch"
+    "dev": "rslib build --watch",
+    "publish:jsr": "pnpm dlx jsr publish"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0"

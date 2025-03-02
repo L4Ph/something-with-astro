@@ -16,7 +16,7 @@
   "scripts": {
     "build": "pnpm run --filter @l4ph/* build",
     "test": "pnpm run --filter @l4ph/* vitest",
-    "publish:jsr": "pnpm run --filter @l4ph/* pnpm dlx jsr publish"
+    "publish:jsr": "pnpm run --filter @l4ph/* publish:jsr"
   },
   "devDependencies": {
     "@rslib/core": "^0.5.2",
