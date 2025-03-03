@@ -11,6 +11,11 @@ const blog = defineCollection({
 		forcePathStyle: false,
 		markdownParse: true,
 		imageReplace: true,
+		astroConfig: {
+			markdown: {
+				syntaxHighlight: "shiki"
+			}
+		}
 	}),
 });
 

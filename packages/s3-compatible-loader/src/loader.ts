@@ -14,8 +14,8 @@ export type S3CompatibleLoaderOptions = {
   prefix?: string;
   forcePathStyle?: boolean;
   clientOptions?: Partial<S3ClientConfig>;
-  markdownParse?: boolean;
-  imageReplace?: boolean;
+  markdownParse: boolean;
+  imageReplace: boolean;
   astroConfig?: AstroConfig;
 }
 
@@ -116,7 +116,8 @@ export function s3CompatibleLoader(options: S3CompatibleLoaderOptions): Loader {
               const rendered = await renderToString(
                 options.astroConfig || { markdown: {} } as AstroConfig, 
                 entry,
-                options // Pass the S3 options to renderToString
+                options,
+                client
               );
               html = rendered.html;
               logger.debug(`Rendered HTML for ${id}`);
