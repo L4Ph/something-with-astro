@@ -2,20 +2,10 @@
   "name": "something-for-astro",
   "version": "0.0.0",
   "type": "module",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "pnpm run --filter @l4ph/* build",
     "test": "pnpm run --filter @l4ph/* vitest",
+    "demo:dev": "pnpm run --filter demo-* dev",
     "publish:jsr": "pnpm run --filter @l4ph/* publish:jsr",
     "publish:npm": "pnpm run --filter @l4ph/* publish:npm"
   },

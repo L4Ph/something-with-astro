@@ -2,7 +2,7 @@ import { S3Client, ListObjectsV2Command, GetObjectCommand, type S3ClientConfig }
 import type { Loader } from 'astro/loaders';
 import type { AstroConfig } from 'astro';
 import type { Readable } from 'node:stream';
-import { streamToString } from './utils';
+import streamToString from './utils/stream-to-string';
 import renderToString from './render';
 
 export type S3CompatibleLoaderOptions = {
@@ -15,6 +15,7 @@ export type S3CompatibleLoaderOptions = {
   forcePathStyle?: boolean;
   clientOptions?: Partial<S3ClientConfig>;
   markdownParse?: boolean;
+  imageReplace?: boolean;
   astroConfig?: AstroConfig;
 }
 
@@ -114,7 +115,8 @@ export function s3CompatibleLoader(options: S3CompatibleLoaderOptions): Loader {
               
               const rendered = await renderToString(
                 options.astroConfig || { markdown: {} } as AstroConfig, 
-                entry
+                entry,
+                options // Pass the S3 options to renderToString
               );
               html = rendered.html;
               logger.debug(`Rendered HTML for ${id}`);
