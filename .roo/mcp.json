@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "daisy-ui": {
+      "command": "pnpm dlx",
+      "args": [
+        "-y",
+        "sitemcp@latest",
+        "https://docs.astro.build",
+        "-m",
+        "/en/getting-started/**"
+      ]
+    }
+  }
+}
